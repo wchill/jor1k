@@ -1844,9 +1844,9 @@ jor1kGUI.prototype.Pause = function(pause) {
 }
 
 // sends the input characters for the terminal
-jor1kGUI.prototype.SendChars = function(chars) {
+jor1kGUI.prototype.SendChars = function(chars, ttyid) {
     if (this.lastMouseDownTarget == this.fbcanvas) return;
-    message.Send("tty0", chars);
+    message.Send("tty" + ttyid, chars);
 }
 
 module.exports = jor1kGUI;
@@ -1914,7 +1914,7 @@ function MackeTerm(termid) {
 
 MackeTerm.prototype.Init = function(jor1kGUI) {
     this.term = new Terminal(24, 80, this.termid);
-    jor1kGUI.message.Register("tty0", function(d) {
+    jor1kGUI.message.Register(this.termid, function(d) {
        d.forEach(function(c) {
            this.term.PutChar(c&0xFF);
        }.bind(this));

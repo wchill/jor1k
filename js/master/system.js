@@ -65,6 +65,11 @@ function jor1kGUI(parameters)
         this.term.Init(this);
     }
 
+    if (this.params.term2) {
+        this.term2 = this.params.term2;
+        this.term2.Init(this);
+    }
+
     this.terminput = new TerminalInput(this.SendChars.bind(this));
 
     this.fs = new Filesystem();
@@ -215,9 +220,9 @@ jor1kGUI.prototype.Pause = function(pause) {
 }
 
 // sends the input characters for the terminal
-jor1kGUI.prototype.SendChars = function(chars) {
+jor1kGUI.prototype.SendChars = function(chars, ttyid) {
     if (this.lastMouseDownTarget == this.fbcanvas) return;
-    message.Send("tty0", chars);
+    message.Send("tty" + ttyid, chars);
 }
 
 module.exports = jor1kGUI;

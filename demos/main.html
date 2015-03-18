@@ -24,6 +24,9 @@
                     <canvas id="tty" class="screen" width="640" height="384">
                         Terminal uses canvas
                     </canvas>
+                    <canvas id="tty2" class="screen" width="640" height="384">
+                        Terminal uses canvas
+                    </canvas>
                     </td></tr>
                     <tr><td>
                     <span style="float: left" >
@@ -178,7 +181,7 @@ function Start() {
             kernelURL: "vmlinux.bin.bz2", // kernel image
             memorysize: 32, // in MB, must be a power of two
             cpu: "asm", // short name for the cpu to use
-            ncores: 1,
+            ncores: 1
         },
         fs: {
             basefsURL: "basefs.json", // json file with the basic filesystem configuration.
@@ -189,6 +192,7 @@ function Start() {
 	},
 
         term: new MackeTerm("tty"),             // canvas id for the terminal
+        term2: new MackeTerm("tty2"),
         fbid: "fb",                // canvas id for the framebuffer
         clipboardid: "clipboard",  // input id for the clipboard
         statsid: "stats",          // object id for the statistics test
@@ -196,7 +200,7 @@ function Start() {
         relayURL: "ws://relay.widgetry.org/", // relay url for the network
         userid: userid, // unique user id string. Empty, choosen randomly, from a url, or from a cookie.
         syncURL: "http://jor1k.com/sync/upload.php", // url to sync a certain folder
-        path: "../bin/",
+        path: "../bin/"
     }
 
     // --------------------------------------------------------

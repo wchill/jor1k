@@ -198,13 +198,13 @@ System.prototype.PrintState = function() {
     message.Debug(this.cpu.toString());
 };
 
-System.prototype.SendStringToTerminal = function(str)
+System.prototype.SendStringToTerminal = function(str, ttyid)
 {
     var chars = [];
     for (var i = 0; i < str.length; i++) {
         chars.push(str.charCodeAt(i));
     }
-    message.Send("tty0", chars);
+    message.Send("tty" + ttyid, chars);
 };
 
 System.prototype.LoadImageAndStart = function(url) {
