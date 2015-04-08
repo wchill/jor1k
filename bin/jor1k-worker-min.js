@@ -9517,7 +9517,7 @@ function FSLoader(filesystem) {
 }
 
 FSLoader.prototype.HandleDirContents = function(list, parentid) {
-    for (var tag in list) {
+    for (var tag of list) {
          var inode;
 
          var id = this.fs.Search(parentid, tag.name);
@@ -10279,11 +10279,12 @@ System.prototype.PrintState = function() {
 
 System.prototype.SendStringToTerminal = function(str, ttyid)
 {
+    ttyid = ttyid || "tty0";
     var chars = [];
     for (var i = 0; i < str.length; i++) {
         chars.push(str.charCodeAt(i));
     }
-    message.Send("tty" + ttyid, chars);
+    message.Send(ttyid, chars);
 };
 
 System.prototype.LoadImageAndStart = function(url) {

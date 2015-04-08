@@ -222,7 +222,7 @@ jor1kGUI.prototype.Pause = function(pause) {
 // sends the input characters for the terminal
 jor1kGUI.prototype.SendChars = function(chars, ttyid) {
     if (this.lastMouseDownTarget == this.fbcanvas) return;
-    message.Send("tty" + ttyid, chars);
+    message.Send(ttyid, chars);
 }
 
 module.exports = jor1kGUI;

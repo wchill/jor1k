@@ -603,7 +603,7 @@ TerminalInput.prototype.OnKeyPress = function(e) {
     if ((this.CTRLpressed) && (((key >= 0x41) && (key <= 0x5A)) || ((key >= 0x61) && (key <= 0x7A)))) {
         key &= 0x1F;
     }
-    this.SendChars(UTF8.UnicodeToUTF8Stream(key));
+    this.SendChars(UTF8.UnicodeToUTF8Stream(key), "tty0");
     return false;
 };
 
@@ -631,7 +631,7 @@ TerminalInput.prototype.OnKeyDown = function(e) {
  
     // CTRL + x key handling for chrome 
     if ((this.CTRLpressed) && (!this.ALTpressed) && (keycode >= 65) && (keycode <= 90)) {
-        this.SendChars([(keycode-32) & 0x1F]);
+        this.SendChars([(keycode-32) & 0x1F], "tty0");
         e.preventDefault();
         return false;
     }
@@ -639,7 +639,7 @@ TerminalInput.prototype.OnKeyDown = function(e) {
     switch (keycode) {
     case 8:
         // del
-        this.SendChars([0x7F]);
+        this.SendChars([0x7F], "tty0");
         e.preventDefault();
         return false;
         break;
@@ -652,25 +652,25 @@ TerminalInput.prototype.OnKeyDown = function(e) {
         break;
     case 38:
         // up
-        this.SendChars([0x1B, 0x5B, 0x41]);
+        this.SendChars([0x1B, 0x5B, 0x41], "tty0");
         e.preventDefault();
         return false;
         break;
     case 37:
         // left
-        this.SendChars([0x1B, 0x5B, 0x44]);
+        this.SendChars([0x1B, 0x5B, 0x44], "tty0");
         e.preventDefault();
         return false;
         break;
     case 39:
         // right
-        this.SendChars([0x1B, 0x5B, 0x43]);
+        this.SendChars([0x1B, 0x5B, 0x43], "tty0");
         e.preventDefault();
         return false;
         break;
     case 40:
         // down
-        this.SendChars([0x1B, 0x5B, 0x42]);
+        this.SendChars([0x1B, 0x5B, 0x42], "tty0");
         e.preventDefault();
         return false;
         break;
@@ -680,7 +680,7 @@ TerminalInput.prototype.OnKeyDown = function(e) {
     case 115:
     case 116:
         // F1 - F5
-        this.SendChars([0x1B, 0x5B, 0x5B, keycode-112+0x41]);
+        this.SendChars([0x1B, 0x5B, 0x5B, keycode-112+0x41], "tty0");
         e.preventDefault();
         return false;
         break;
@@ -688,51 +688,51 @@ TerminalInput.prototype.OnKeyDown = function(e) {
     case 118:
     case 119:
         // F6 - F8
-        this.SendChars([0x1B, 0x5B, 0x31, keycode-117+0x37, 0x7E]);
+        this.SendChars([0x1B, 0x5B, 0x31, keycode-117+0x37, 0x7E], "tty0");
         e.preventDefault();
         return false;
         break;
     case 120:
     case 121:
         // F9 - F10
-        this.SendChars([0x1B, 0x5B, 0x32, keycode-120+0x30, 0x7E]);
+        this.SendChars([0x1B, 0x5B, 0x32, keycode-120+0x30, 0x7E], "tty0");
         e.preventDefault();
         return false;
         break;
 
     case 36:
         // pos1
-        this.SendChars([0x1b, 0x5b, 0x48]);
+        this.SendChars([0x1b, 0x5b, 0x48], "tty0");
         e.preventDefault();
         return false;
         break;
     case 35:
         // end
-        this.SendChars([0x1b, 0x5b, 0x46]);
+        this.SendChars([0x1b, 0x5b, 0x46], "tty0");
         e.preventDefault();
         return false;
         break;
     case 33:
         // Page up
-        this.SendChars([0x1b, 0x5b, 0x35, 0x7e]);
+        this.SendChars([0x1b, 0x5b, 0x35, 0x7e], "tty0");
         e.preventDefault();
         return false;
         break;
     case 34:
         // Page down
-        this.SendChars([0x1b, 0x5b, 0x36, 0x7e]);
+        this.SendChars([0x1b, 0x5b, 0x36, 0x7e], "tty0");
         e.preventDefault();
         return false;
         break;
     case 45:
         // ins
-        this.SendChars([0x1b, 0x5b, 0x32, 0x7e]);
+        this.SendChars([0x1b, 0x5b, 0x32, 0x7e], "tty0");
         e.preventDefault();
         return false;
         break;
     case 46:
         // del
-        this.SendChars([0x1b, 0x5b, 0x33, 0x7e]);
+        this.SendChars([0x1b, 0x5b, 0x33, 0x7e], "tty0");
         e.preventDefault();
         return false;
         break;
@@ -751,7 +751,7 @@ TerminalInput.prototype.OnKeyDown = function(e) {
     }
 
     if ((keycode != 0) && (keycode <= 0x1F)) {
-        this.SendChars([keycode]);
+        this.SendChars([keycode], "tty0");
         e.preventDefault();
         return false;
     }
@@ -1662,7 +1662,7 @@ function jor1kGUI(parameters)
 
     this.params.fs = this.params.fs  || {};
     this.params.fs.basefsURL = this.params.fs.basefsURL  || "basefs.json";
-    // this.params.fs.extendedfsURL = this.params.fs.extendedfsURL  || "";
+    this.params.fs.extendedfsURL = this.params.fs.extendedfsURL  || "../../jor1k-sysroot/fs.json";
     this.params.fs.earlyload = this.params.fs.earlyload  || [];
     this.params.fs.lazyloadimages = this.params.fs.lazyloadimages  || [];
 
@@ -1694,6 +1694,11 @@ function jor1kGUI(parameters)
         this.term.Init(this);
     }
 
+    if (this.params.term2) {
+        this.term2 = this.params.term2;
+        this.term2.Init(this);
+    }
+
     this.terminput = new TerminalInput(this.SendChars.bind(this));
 
     this.fs = new Filesystem();
@@ -1717,7 +1722,7 @@ function jor1kGUI(parameters)
            chars.push(v.charCodeAt(i));
        }
 
-       this.SendChars(chars);
+       this.SendChars(chars, "tty0");
        this.clipboard.value = "";
    }.bind(this);
    }
@@ -1846,7 +1851,7 @@ jor1kGUI.prototype.Pause = function(pause) {
 // sends the input characters for the terminal
 jor1kGUI.prototype.SendChars = function(chars, ttyid) {
     if (this.lastMouseDownTarget == this.fbcanvas) return;
-    message.Send("tty" + ttyid, chars);
+    message.Send(ttyid, chars);
 }
 
 module.exports = jor1kGUI;

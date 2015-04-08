@@ -21,10 +21,10 @@
                 <td style="vertical-align: top">
                     <table>
                     <tr><td>
-                    <canvas id="tty" class="screen" width="640" height="384">
+                    <canvas id="tty0" class="screen" width="640" height="384">
                         Terminal uses canvas
                     </canvas>
-                    <canvas id="tty2" class="screen" width="640" height="384">
+                    <canvas id="tty1" class="screen" width="640" height="384">
                         Terminal uses canvas
                     </canvas>
                     </td></tr>
@@ -191,8 +191,8 @@ function Start() {
             ] // list of automatically loaded images after the basic filesystem has been loaded
 	},
 
-        term: new MackeTerm("tty"),             // canvas id for the terminal
-        term2: new MackeTerm("tty2"),
+        term: new MackeTerm("tty0"),             // canvas id for the terminal
+        term2: new MackeTerm("tty1"),
         fbid: "fb",                // canvas id for the framebuffer
         clipboardid: "clipboard",  // input id for the clipboard
         statsid: "stats",          // object id for the statistics test
